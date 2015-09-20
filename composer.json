@@ -1,0 +1,24 @@
+{
+  "name": "bespoke-support/trello-updates",
+  "description": "Manage Trello Updates",
+  "type": "project",
+  "keywords": ["trello"],
+  "homepage": "https://github.com/BespokeSupport/TrelloUpdates",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Richard Seymour",
+      "email": "web@bespoke.support"
+    }
+  ],
+  "require": {
+    "symfony/console": "^2.7",
+    "symfony/yaml": "^2.7",
+    "trello/trello": "^0.1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "BespokeSupport\\TrelloUpdates\\": "src/"
+    }
+  }
+}
