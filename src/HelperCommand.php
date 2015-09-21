@@ -37,8 +37,8 @@ class HelperCommand extends Command
     const ERROR_MEMBER = 'Invalid User/Member. Run bs:trello:cache:member';
     const ERROR_BOARDS = 'Invalid Boards. Run bs:trello:cache:boards';
     const ERROR_LIST = 'Invalid Lists. Run bs:trello:cache:lists';
-
-    const API_URL_BASE = 'https://trello.com/1';
+    const FILE_CONFIG = '/config.yml';
+    const URL_BASE = 'https://trello.com/1';
 
     public static $ignoredBoards = [
         '51fd80084fd3cf0553000a76', // Welcome Board
@@ -300,5 +300,31 @@ class HelperCommand extends Command
         }
 
         return $lists;
+    }
+
+
+    /**
+     * Get Config
+     * @return array
+     */
+    public static function getConfig()
+    {
+        $file = dirname(__DIR__) . HelperCommand::FILE_CONFIG;
+
+        $config = Yaml::parse(
+            file_get_contents(
+                $file
+            )
+        );
+
+        if (!$config) {
+            $config = ['boards' => []];
+            file_put_contents(
+                $file,
+                Yaml::dump($config)
+            );
+        }
+
+        return $config;
     }
 }
