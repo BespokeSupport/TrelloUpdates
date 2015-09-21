@@ -101,7 +101,7 @@ class CredentialsCommand extends Command
         $output->writeln('<info>' . self::HELP_TOKEN . '</info>');
 
         $tokenUrl = sprintf(
-            HelperCommand::API_URL_BASE . self::URL_TOKEN,
+            HelperCommand::URL_BASE . self::URL_TOKEN,
             $this->credentials['api_key'],
             self::PACKAGE_NAME
         );
