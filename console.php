@@ -12,11 +12,13 @@
  * @link     https://github.com/BespokeSupport/TrelloUpdates
  */
 
+use BespokeSupport\TrelloUpdates\BoardConfigCommand;
 use BespokeSupport\TrelloUpdates\BoardSelectCommand;
 use BespokeSupport\TrelloUpdates\CacheBoardsCommand;
 use BespokeSupport\TrelloUpdates\CacheListsCommand;
 use BespokeSupport\TrelloUpdates\CacheMemberCommand;
 use BespokeSupport\TrelloUpdates\CredentialsCommand;
+use BespokeSupport\TrelloUpdates\EmailSingleCommand;
 use BespokeSupport\TrelloUpdates\HelperCommand;
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
@@ -43,6 +45,12 @@ $application->add(new CacheListsCommand());
 
 // sub command
 $application->add(new BoardSelectCommand());
+
+// sub command
+$application->add(new BoardConfigCommand());
+
+// sub command
+$application->add(new EmailSingleCommand());
 
 // run it
 $application->run();

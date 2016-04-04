@@ -202,7 +202,7 @@ class HelperCommand extends Command
 
         $member = Yaml::parse(
             file_get_contents(
-                dirname(__DIR__) . CacheMemberCommand::FILE_CACHE
+                $file
             )
         );
 
@@ -237,7 +237,7 @@ class HelperCommand extends Command
 
         $boards = Yaml::parse(
             file_get_contents(
-                dirname(__DIR__) . CacheBoardsCommand::FILE_CACHE
+                $file
             )
         );
 
@@ -267,9 +267,7 @@ class HelperCommand extends Command
 
         if (!file_exists($file)) {
             if ($fetchOrCreate) {
-                $listCache = [
-                    'lists' => []
-                ];
+                $listCache = [];
                 file_put_contents(
                     dirname(__DIR__) . CacheListsCommand::FILE_CACHE,
                     Yaml::dump($listCache)
@@ -311,20 +309,57 @@ class HelperCommand extends Command
     {
         $file = dirname(__DIR__) . HelperCommand::FILE_CONFIG;
 
-        $config = Yaml::parse(
-            file_get_contents(
-                $file
-            )
-        );
-
-        if (!$config) {
-            $config = ['boards' => []];
+        if (!file_exists($file)) {
+            $config = [
+                'developers' => [],
+                'boards' => []
+            ];
             file_put_contents(
                 $file,
                 Yaml::dump($config)
             );
         }
 
+        $config = Yaml::parse(
+            file_get_contents(
+                $file
+            )
+        );
+
         return $config;
+    }
+
+    /**
+     * Array save as YAML
+     * @param array $config Config array
+     * @return bool
+     */
+    public static function setConfig($config)
+    {
+        $file = dirname(__DIR__) . HelperCommand::FILE_CONFIG;
+
+        file_put_contents(
+            $file,
+            Yaml::dump($config)
+        );
+
+        return true;
+    }
+
+    /**
+     * Set the default options
+     * @return array array
+     */
+    public static function getDefaultBoardConfig()
+    {
+        return [
+            'lists'=> [],
+            'email'=> [],
+            'include'=> [],
+            'exclude'=> [],
+            'order'=> [],
+            'exclude_all'=> false,
+            'include_all'=> true,
+        ];
     }
 }

@@ -64,13 +64,13 @@ class BoardSelectCommand extends Command
             return false;
         }
 
-        $keys = array_keys($boards['boards']);
+        $keys = array_keys($boards);
 
         $output->writeln("<info>Select a board to work with:</info>");
 
         foreach ($keys as $key => $board) {
             $num = $key + 1;
-            $output->writeln("\t ($num)\t {$boards['boards'][$board]['name']}");
+            $output->writeln("\t ($num)\t {$boards[$board]['name']}");
         }
 
         $helper = $this->getHelper('question');
@@ -83,7 +83,7 @@ class BoardSelectCommand extends Command
 
         $key = $answer - 1;
 
-        $board = $boards['boards'][$keys[$key]];
+        $board = $boards[$keys[$key]];
 
         return $board;
     }

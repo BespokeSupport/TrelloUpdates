@@ -65,9 +65,7 @@ class CacheBoardsCommand extends Command
             return false;
         }
 
-        $boards = [
-            'boards' => []
-        ];
+        $boards = [];
 
         foreach ($member['idBoards'] as $board) {
             if (in_array($board, HelperCommand::$ignoredBoards)) {
@@ -86,7 +84,7 @@ class CacheBoardsCommand extends Command
                 continue;
             }
 
-            $boards['boards'][$trelloBoard->id] = [
+            $boards[$trelloBoard->id] = [
                 'id' => $trelloBoard->id,
                 'name' => $trelloBoard->name,
                 'desc' => $trelloBoard->desc,

@@ -65,11 +65,11 @@ class CacheListsCommand extends Command
             return false;
         }
 
-        $listCache = [
-            'lists' => []
-        ];
+        $listCache = [];
 
-        foreach ($boards['boards'] as $board => $data) {
+        $config = HelperCommand::getConfig();
+
+        foreach ($boards as $board => $data) {
             $trelloBoard = $trello->getBoard($board);
 
             if (!$trelloBoard) {
@@ -78,18 +78,31 @@ class CacheListsCommand extends Command
                 continue;
             }
 
+            if (!array_key_exists($board, $config['boards'])) {
+                $config['boards'][$board] = HelperCommand::getDefaultBoardConfig();
+            }
+
             $lists = $trelloBoard->getLists();
 
-            $listCache['lists'][$board] = [];
+            $listCache[$board] = [];
 
             foreach ($lists as $list) {
-                $listCache['lists'][$board][$list->id] = [
+                $listCache[$board][$list->id] = [
                     'name' => $list->name,
                     'pos' => $list->pos,
                     'closed' => $list->closed
                 ];
+
+                if (!array_key_exists(
+                    $list->id,
+                    $config['boards'][$board]['lists']
+                )) {
+                    $config['boards'][$board]['lists'][] = $list->id;
+                }
             }
         }
+
+        HelperCommand::setConfig($config);
 
         file_put_contents(
             dirname(__DIR__) . self::FILE_CACHE,
