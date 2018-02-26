@@ -102,9 +102,9 @@ class BoardSelectCommand extends Command
 
             $lists = HelperCommand::getCachedLists($output);
 
-            $boardLists = $lists['lists'][$board['id']];
+            $boardLists = $lists[$board['id']];
 
-            foreach ($boardLists as $id => $listData) {
+            foreach ($boardLists as $listData) {
                 $output->writeln("\t{$listData['name']}");
             }
 
